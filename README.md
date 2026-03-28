@@ -1,101 +1,66 @@
 # Project VULCAN
 
-  ![vulcan](https://github.com/ERC-BPGC/project-vulcan/assets/64892362/435007e0-b9ac-4111-8b91-9db8e8976c05)
+![vulcan](https://github.com/ERC-BPGC/project-vulcan/assets/64892362/435007e0-b9ac-4111-8b91-9db8e8976c05)
 
-A project in which we aim at making a humanoid robot's facial structure that can interact with humans and have some simple skills and interactions.
+A humanoid robot facial structure that can interact with humans — tracking faces, expressing emotions, hearing and speaking.
 
-## Usage of this project
+---
 
-*	The main use of this robot is to be an assistant just like Alexa and other assistants... So, then what is the difference? well... this robot will give a human interactive and fell to the answers it... so it feels as if you are conversating with a human and not a speaker ... 
-*	Planning to use a good camera with a decent FOV as we need to track the humans around it so the precision will be needed... 
+## Features
 
+- **Eyes** — Independent 2-axis eyeball motion, eyelids, and gaze tracking via embedded cameras
+- **Mouth** — Lip movement synced with speech and emotional expressions
+- **Eyebrows** — Up/down motion to complement expressions
+- **Neck** — 2-axis motion (horizontal 360° + vertical tilt)
+- **Hearing & Speech** — Microphone array for sound localisation, speech recognition, and TTS output
+- **Vision** — Face detection, gaze estimation, emotion recognition (FER), hand-wave detection
+- **LLM Integration** — RAG-augmented responses via GPT
 
-## Major Features
-
-We aim this bot to have facial movements like humans and also have expressions. 
-
-Elaborating:
-
-```
-*	Eyeballs moving and having eye contact with the person to be interacted.
-*	Mouth moving when the robot speaks.
-*	Eyebrow movements.
-*	Neck movement.
-*	Hearing and speaking.
-*	2 cameras in the eyes for vision.
-*	Analysing what the person has spoken and given a sensible reply... trying to integrate with google, Wikipedia and other platforms that can give a good answer for a question.
-```
-
-
-### Going deeper into the motions
-
-```
-*	Each eyeball having independent motion in 2 axes.
-*	Each eyeball having an eyelid that can open and close.
-*	Eyebrows that can up-down to add to the expressions.
-*	Mouth that can bring about expressions with lips.
-*	Neck motion to move the entire system about 2 axes.
-```
-
-## Sensing
-
-*	Camera for human detection and other things in the environment.
-*	Microphones for sound detection and locating the sound source.
+---
 
 ## Subsystems
 
 ### Mechanical
-*	[Eye, eyelid and eyebrow subsystem](https://www.youtube.com/watch?v=uqxhR49N3ws): Eyeballs non symmetric motion with cameras in each. Eyelids opening and closing. Eyebrows for motion.
-*	[Mouth subsystem](https://www.youtube.com/watch?v=Ke2lJfY4haM):  . Movement while delivering words and also depicting emotions through lips.
-*	[Neck subsystem](https://www.youtube.com/watch?v=GJRW8hP-Jcs):  . 360-degree motion in horizontal plane and up-down in vertical plane.
+- [Eye, eyelid & eyebrow subsystem](https://www.youtube.com/watch?v=uqxhR49N3ws) — asymmetric eyeball motion with cameras, blinking, and brow movement
+- [Mouth subsystem](https://www.youtube.com/watch?v=Ke2lJfY4haM) — lip articulation for speech and emotion
+- [Neck subsystem](https://www.youtube.com/watch?v=GJRW8hP-Jcs) — full pan and tilt
 
-### Coding
+### Software
+- **`software/vision/`** — face detection, gaze estimation (`t_gaze.py`), emotion recognition (`m_model.py`, `m_expression.py`), hand-wave detection
+- **`software/speech/`** — speech-to-text, TTS, voice selection
+- **`software/llm/`** — GPT interface and RAG pipeline for context-aware responses
+- **`software/core/`** — main driver (`vulcan.py`, `vulcan2.py`) coordinating all subsystems
 
-*	Movement of all mech subsystems: Coordination of all servos and other actuators to bring about emotions and other functions like talking.
-*	Hearing and Speech production: Speech recognition, processing it and delivery of words and emotions to the above system. NLM, NLP. 
+### Electronics
+- Servo PCB (ESP32 & Mega variants) — custom KiCad boards in `electronics/pcb/`
+- ESP32-CAM firmware — `electronics/firmware/camera_esp/`
+- Arduino servo firmware — `electronics/firmware/serial_arduino/`
 
-## Individual components 
-* Gaze.py: This file uses dlib, cv2 and CNN_FACE_MODEL to estimate the gaze of the user according to  which it passes a function to driver code returning true if the model estimate gaze to be more than 0.65. 
-* expression(final).py: We used cv2, keras.models and self generated model to identify the person's current mood state in order to assist with the environmental awareness of our vulcan's main drive system.
-* person recognition: it identifies the person with whom it is talking and analyze the past recorded converstaion in order to give better response.
-
-## Limitations
-*	Cannot move physically, just creating the structure above the neck.
-
-## The future of this project?
-
-Well... this is probably the 1% out of the 100 that we can do with... can start another project with bi-paddle motion and mount this on top of it?? and with the robotic arms?? or just the robotic arms??? well that quite open for now... but this is a crucial step as we will be making the so called "head".
-
-## Present existence of similar projects:
-
-*	At present the best example of such a project is Sophia robot, kismet, Ameca robots ... we aim to reach closer to that by this project...
-
-*	However, our robot just comprises of the face but still, it can serve the purpose we aim to make it for... 
-
-*	We have seen many big companies build humanoid robots but a robot that can move and come to use in daily life but starting this at college level would be amazing...
+---
 
 ## Repository Structure
 
 ```
 project-vulcan/
-├── docs/               # Install guides, architecture diagrams
-├── software/           # All Python source code
-│   ├── core/           # Main entry points (vulcan.py, vulcan2.py)
-│   ├── vision/         # CV modules — face, gaze, expression, hand detection
-│   ├── speech/         # STT, TTS, voices
-│   ├── llm/            # GPT integration + RAG pipeline
-│   ├── data/           # Knowledge base files for RAG
-│   ├── utils/          # Shared helper scripts
-│   ├── tools/          # Diagnostic utilities (check mic, list cameras)
-│   ├── experiments/    # Work-in-progress / prototype scripts
-│   ├── models/         # Model weights (gitignored — see models/README.md)
-│   ├── archive/        # Old / deprecated code kept for reference
+├── docs/                   # Install guides (CUDA, OpenCV, dlib), diagrams
+├── software/
+│   ├── core/               # Main entry points
+│   ├── vision/             # CV modules
+│   ├── speech/             # STT / TTS
+│   ├── llm/                # GPT + RAG pipeline
+│   │   └── rag/
+│   ├── data/               # Knowledge base files for RAG
+│   ├── utils/              # Shared helpers
+│   ├── tools/              # Diagnostic scripts (check mic, list cameras)
+│   ├── experiments/        # Prototypes and WIP scripts
+│   ├── models/             # Model weights (gitignored — see models/README.md)
+│   ├── archive/            # Deprecated code
 │   └── requirements.txt
 ├── electronics/
-│   ├── pcb/            # KiCad PCB projects (servo, microphone, ESP-CAM)
-│   ├── firmware/       # Arduino / ESP32 sketches
-│   └── scripts/        # Python scripts that communicate with hardware
-└── mechanical/         # CAD files for all mechanical subsystems
+│   ├── pcb/                # KiCad projects
+│   ├── firmware/           # Arduino / ESP32 sketches
+│   └── scripts/            # Python hardware-communication scripts
+└── mechanical/             # CAD files (SolidWorks, Fusion, Blender, STL)
     ├── Eye_subsystem/
     ├── Mouth_Subsystem/
     ├── Head Structure/
@@ -103,16 +68,37 @@ project-vulcan/
     └── base_holder/
 ```
 
-> **Model weights** are not tracked in git. See [`software/models/README.md`](software/models/README.md) for download links.
-> **Install guides** (CUDA, OpenCV, dlib) are in [`docs/`](docs/).
+> **Model weights** are not tracked in git — see [`software/models/README.md`](software/models/README.md) for download links.  
+> **Install guides** for CUDA, OpenCV, and dlib are in [`docs/`](docs/).
+
+---
+
+## Getting Started
+
+```bash
+# Install Python dependencies
+pip install -r software/requirements.txt
+
+# Download model weights (see software/models/README.md), then run
+python software/core/vulcan2.py
+```
+
+---
 
 ## Built With
 
-* [Python](https://www.python.org/) - The language used
-* [ROS](https://www.ros.org/) - Environment used
-* [OPENCV](https://opencv.org/) - Used for vision
+- [Python](https://www.python.org/)
+- [OpenCV](https://opencv.org/)
+- [dlib](http://dlib.net/)
+- [LangChain](https://www.langchain.com/) / [OpenAI](https://openai.com/)
+- [KiCad](https://www.kicad.org/)
+- [ROS](https://www.ros.org/)
 
-## Project Leads
+## Limitations
 
-* [Parth Shah](https://github.com/Parth-Shah-Tool-Kit)
-* [Ritwik Sharma](https://github.com/Maker-Rat)
+- The robot covers only the structure above the neck — no full-body mobility.
+
+## Papa
+
+- [Parth Shah](https://github.com/Parth-Shah-Tool-Kit)
+- [Ritwik Sharma](https://github.com/Maker-Rat)
