@@ -74,6 +74,38 @@ Well... this is probably the 1% out of the 100 that we can do with... can start 
 
 *	We have seen many big companies build humanoid robots but a robot that can move and come to use in daily life but starting this at college level would be amazing...
 
+## Repository Structure
+
+```
+project-vulcan/
+├── docs/               # Install guides, architecture diagrams
+├── software/           # All Python source code
+│   ├── core/           # Main entry points (vulcan.py, vulcan2.py)
+│   ├── vision/         # CV modules — face, gaze, expression, hand detection
+│   ├── speech/         # STT, TTS, voices
+│   ├── llm/            # GPT integration + RAG pipeline
+│   ├── data/           # Knowledge base files for RAG
+│   ├── utils/          # Shared helper scripts
+│   ├── tools/          # Diagnostic utilities (check mic, list cameras)
+│   ├── experiments/    # Work-in-progress / prototype scripts
+│   ├── models/         # Model weights (gitignored — see models/README.md)
+│   ├── archive/        # Old / deprecated code kept for reference
+│   └── requirements.txt
+├── electronics/
+│   ├── pcb/            # KiCad PCB projects (servo, microphone, ESP-CAM)
+│   ├── firmware/       # Arduino / ESP32 sketches
+│   └── scripts/        # Python scripts that communicate with hardware
+└── mechanical/         # CAD files for all mechanical subsystems
+    ├── Eye_subsystem/
+    ├── Mouth_Subsystem/
+    ├── Head Structure/
+    ├── Neck Base/
+    └── base_holder/
+```
+
+> **Model weights** are not tracked in git. See [`software/models/README.md`](software/models/README.md) for download links.
+> **Install guides** (CUDA, OpenCV, dlib) are in [`docs/`](docs/).
+
 ## Built With
 
 * [Python](https://www.python.org/) - The language used
@@ -82,5 +114,5 @@ Well... this is probably the 1% out of the 100 that we can do with... can start 
 
 ## Project Leads
 
-* [Parth Shah](https://github.com/Parth-Shah-Tool-Kit) 
-* [Ritwik Sharma](https://github.com/Maker-Rat) 
+* [Parth Shah](https://github.com/Parth-Shah-Tool-Kit)
+* [Ritwik Sharma](https://github.com/Maker-Rat)
